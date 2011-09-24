@@ -1,25 +1,25 @@
 <?php
 
 /*
- *	This file is part of turnip by Filipe Dobreira
+ * This file is part of turnip by Filipe Dobreira
  *
- *	turnip is free software: you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation, either version 3 of the License, or
- *	(at your option) any later version.
+ * turnip is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *	turnip is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
+ * turnip is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *	You should have received a copy of the GNU General Public License
- *	along with turnip.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with turnip.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace turnip\routing;
 use \turnip\routing\route,
-	\turnip\routing\exception;
+    \turnip\routing\exception;
 
 /**
  * \turnip\routing\router
@@ -55,11 +55,11 @@ class router
 	 *
 	 * Example input:
 	 *
-	 *	array(
-	 *		array('/gallery', $handler),
-	 *		array('/', $handler),
-	 *		array('/', $handler)
-	 *	)
+	 * array(
+	 * 	array('/gallery', $handler),
+	 * 	array('/', $handler),
+	 * 	array('/', $handler)
+	 * )
 	 *
 	 * @todo Seriously missing an array.extend method short of some
 	 * 		 call_user_func_array hackery.
@@ -98,16 +98,16 @@ class router
 	 *
 	 * Structure of $this->_routes (example):
 	 *
-	 *	array(
-	 *		array(
-	 *			'/' 	   => <handler>,
-	 *			'/thing'   => <handler>
-	 *		)
-	 *		array(
-	 *			'/'        => <handler>,
-	 *			'/gallery' => <handler>
-	 *		)
-	 *	)
+	 * array(
+	 * 	array(
+	 * 		'/' 	   => <handler>,
+	 * 		'/thing'   => <handler>
+	 * 	)
+	 * 	array(
+	 * 		'/'        => <handler>,
+	 * 		'/gallery' => <handler>
+	 * 	)
+	 * )
 	 *
 	 * <handler> may be a handler, or a reference
 	 * to an appropriate handler that this router

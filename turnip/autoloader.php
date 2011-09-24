@@ -1,20 +1,20 @@
 <?php
 
 /*
- *	This file is part of turnip by Filipe Dobreira
+ * This file is part of turnip by Filipe Dobreira
  *
- *	turnip is free software: you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation, either version 3 of the License, or
- *	(at your option) any later version.
+ * turnip is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *	turnip is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
+ * turnip is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *	You should have received a copy of the GNU General Public License
- *	along with turnip.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with turnip.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace turnip;
@@ -79,9 +79,9 @@ class autoloader
 	 * autoloader stack.
 	 *
 	 * @todo it's possible to bind this to __destruct,
-	 *		 called when the object isn't referenced
+	 * 	 called when the object isn't referenced
 	 * 		 anymore - but is it worth having the method
-	 *		 called every time the script shuts down?
+	 * 	 called every time the script shuts down?
 	 * @access public
 	 * @see spl_autoload_unregister
 	 */
