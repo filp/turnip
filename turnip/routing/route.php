@@ -22,6 +22,9 @@ namespace turnip\routing;
 /**
  * \turnip\routing\route
  *
+ * Improved regular expression for matching named parameters
+ * taken from the Slim micro-framework: http://slimframework.com
+ *
  * @author Filipe Dobreira <http://github.com/FilipeD>
  * @package turnip
  */
@@ -38,16 +41,6 @@ class route
 	protected $_route;
 
 	/**
-	 * _c_route
-	 *
-	 * A compiled representation of the route.
-	 *
-	 * @access protected
-	 * @var string
-	 */
-	protected $_c_route;
-
-	/**
 	 * __construct
 	 *
 	 * @access public
@@ -56,30 +49,30 @@ class route
 	public function __construct($route)
 	{
 		$this->_route = $route;
-		$this->_compile();
 	}
 
 	/**
 	 * matches
 	 *
-	 */
-	
-
-	/**
-	 * _compile
+	 * Matches this route against a given uri. If a
+	 * match is found, returns array of matched params,
+	 * else returns false.
 	 *
-	 * Converts the route, which may include
-	 * :named-parameters, to a valid regular-
-	 * -expression.
-	 *
-	 * @access protected
+	 * @access public
+	 * @param string $uri
+	 * @return bool|array
 	 */
-	protected function _compile()
+	public function matches($uri)
 	{
-		$route = $this->_route;
-		$route = preg_replace('/:([\w\d]+)/', '(P<$1>.+)', $route);
+		$route = str_replace('/', '\/', $this->_route);
+		$route = preg_replace('/:([a-zA-Z0-9_\-\.\!\~\*\\\'\(\)\:\@\&\=\$\+,%]+)/', '(?P<$1>.+)', $route);
 		$route = '/^' . $route . '\/?$/i';
 
-		var_dump($route);
+		if(preg_match($route, $uri, $matches))
+		{
+			return $matches;
+		}
+
+		return false;
 	}
 }

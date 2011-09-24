@@ -1,6 +1,6 @@
 #turnip#
 
-Is a tiny little php-5.3 **application framework**, cleverly disguised as a turnip.
+...is a small php-5.3 **application framework**, cleverly disguised as a turnip.
 
 ##license##
 

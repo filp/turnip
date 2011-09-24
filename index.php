@@ -34,8 +34,8 @@ call_user_func(function()
 	$app->getRouter()
 		->addRoutes(
 			array(
-				array('/foo/:name', 'hiii'),
-				array('bar', 		'hiii')
+				array(':name', 'hiii'),
+				array('bar',   'hiii')
 			)
 		)
 	->dispatch($app->getClientRequest());

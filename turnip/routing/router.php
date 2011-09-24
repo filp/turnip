@@ -94,7 +94,7 @@ class router
 	 *
 	 * Checks the stored routes for a match, given
 	 * a \turnip\client\request instance. Returns
-	 * true if a match was found.
+	 * true if a match was found and successfully handled.
 	 *
 	 * Structure of $this->_routes (example):
 	 *
@@ -113,6 +113,7 @@ class router
 	 * to an appropriate handler that this router
 	 * understands. 
 	 *
+	 * @todo validating a route should be done in the route class.
 	 * @todo refine description
 	 * @access public
 	 * @param \turnip\client\request $request
@@ -129,6 +130,13 @@ class router
 
 			$handler = $route[1];
 			$route   = new route($route[0]);
+
+			if(false !== ($matches = $route->matches(' < REQUEST URI > ')))
+			{
+				// . . .
+			}
 		}
+
+		return false;
 	}
 }
