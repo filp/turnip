@@ -38,6 +38,9 @@ class router
 	/**
 	 * __construct
 	 *
+	 * @todo MOVE LOGIC OUT OF THIS, SHEESH.
+	 * @todo named parameters should be expanded somewhere
+	 *       around this point, so that step can be cached aswell.
 	 * @access public
 	 * @param array $listeners
 	 */
@@ -47,9 +50,14 @@ class router
 
 		foreach($listeners as $listener)
 		{
+			// @todo listener location should not be hard-coded,
+			//       maybe?
 			$className = "\\turnip\\ext\\$listener";
 			$class     = new $className;
 
+			// reflection is used to retrieve the docComments
+			// for each public method in the listener. each 
+			// comment is parsed looking for `@route` declarations.
 			$reflection = new \ReflectionClass($class);
 			$methods    = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
 			foreach((array) $methods as $method)
@@ -74,6 +82,8 @@ class router
 	/**
 	 * dispatch
 	 *
+	 * Prepares 
+	 *
 	 * @access public
 	 * @param \turnip\application $app
 	 */
@@ -83,6 +93,12 @@ class router
 		foreach($this->_routes as $route)
 		{
 			$callable = $route[1];
+
+			// Builds a regex pattern. named parameters (`:name`)
+			// are expanded to valid regex named captures.
+			// The regular expression used for the capture was taken
+			// from the Slim micro-framework by Josh Lockhart:
+			// http://www.slimframework.com/
 			$route    = str_replace('/', '\/', $route[0]);
 			$route    = preg_replace('/:([a-zA-Z0-9_\-\.\!\~\*\\\'\(\)\:\@\&\=\$\+,%]+)/', '(?P<$1>.+)', $route);
 			$route    = '/^' . $route . '\/?$/i';
@@ -95,11 +111,15 @@ class router
 					$app->getClient()->addToInput($matches);
 				}
 
-				// instantiate the callable class:
+				// at this point, `$callable[1]` holds a class
+				// **name**, NOT an instance. Skipping this step
+				// means the next call would be done statically.
 				$callable[0] = new $callable[0];
 				
 				$ext = call_user_func($callable, $app);
-				// routes can be skipped by returning false.
+
+				// routes can signal the router to pass to the
+				// next listener by returning false.
 				if($ext === false)
 				{
 					continue;

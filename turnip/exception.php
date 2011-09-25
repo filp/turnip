@@ -20,28 +20,12 @@
 namespace turnip;
 
 /**
- * \turnip\extension
+ * \turnip\exception
  *
- * @todo the whole 'extension' concept and implementation
- *       is a drunken mess.
- * @author Filipe Dobreira <github.com/FilipeD>
+ * Base exception for the turnip namespace. All exceptions
+ * under turnip (*should*) extend this class.
+ *
+ * @author Filipe Dobreira <http://github.com/FilipeD>
  * @package turnip
  */
-class extension
-{
-	/**
-	 * getView
-	 *
-	 * Returns a view object pre-set for
-	 * this extension.
-	 *
-	 * @access public
-	 * @return \turnip\view
-	 */
-	public function getView()
-	{
-		$view = new view;
-		$path = substr(get_class($this), strlen(__NAMESPACE__) + 1);
-		return $view->setFileRoot($path);
-	}
-}
+class exception extends \Exception {}

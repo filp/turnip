@@ -20,7 +20,7 @@
 namespace turnip;
 
 /**
- * \turnip\autoloader
+ * \turnip\application
  *
  * @author Filipe Dobreira <github.com/FilipeD>
  * @package turnip
@@ -62,6 +62,9 @@ class application
 	/**
 	 * __construct
 	 *
+	 * Prepares a new turnip application with the
+	 * provided configuration.
+	 *
 	 * @access public
 	 * @param array $config
 	 */
@@ -78,12 +81,13 @@ class application
 		$this->getAutoloader()
 		     ->setRoot(dirname(__DIR__));
 
-		$this->_client     = new client;
-		$this->_router     = new router(
-								  isset($config['ext'])
-								? $config['ext']
-								: array()
-							);
+		$this->_client = new client;
+
+		$this->_router = new router(
+							  isset($config['ext'])
+							? $config['ext']
+							: array()
+						);
 		$this->getRouter()->dispatch($this);
 	}
 

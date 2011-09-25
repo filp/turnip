@@ -22,6 +22,11 @@ namespace turnip;
 /**
  * \turnip\client
  *
+ * Abstraction of a client (user). This class provides
+ * methods for both input and output, through adaptable
+ * interfaces. (eventually, I mean)
+ *
+ * @todo review and cleanup
  * @author Filipe Dobreira <github.com/FilipeD>
  * @package turnip
  */
