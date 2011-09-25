@@ -1,20 +1,20 @@
 <?php
 
 /*
- * This file is part of turnip by Filipe Dobreira
+ *	This file is part of turnip by Filipe Dobreira
  *
- * turnip is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *	turnip is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 3 of the License, or
+ *	(at your option) any later version.
  *
- * turnip is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *	turnip is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with turnip.  If not, see <http://www.gnu.org/licenses/>.
+ *	You should have received a copy of the GNU General Public License
+ *	along with turnip.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace turnip;
@@ -22,11 +22,10 @@ namespace turnip;
 /**
  * \turnip\autoloader
  *
- * PSR-0 standard autoloader implementation:
+ * PSR-0 standard autoloader:
  * https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
  *
- * @todo implement autoloader namespacing?
- * @author Filipe Dobreira <http://github.com/FilipeD>
+ * @author Filipe Dobreira <github.com/FilipeD>
  * @package turnip
  */
 class autoloader
@@ -48,18 +47,18 @@ class autoloader
 	protected $_map;
 
 	/**
-	 * __construct
+	 * _root
 	 *
-	 * @access public
-	 * @see spl_autoload_register
+	 * The root path under which all files for this
+	 * instance are loaded.
+	 *
+	 * @access protected
+	 * @var string
 	 */
-	public function __construct()
-	{
-		$this->register();
-	}
+	protected $_root;
 
 	/**
-	 * register
+	 * __construct
 	 *
 	 * Registers this autoloader with the autoloader
 	 * stack. (throw:true, prepend:true).
@@ -67,9 +66,35 @@ class autoloader
 	 * @access public
 	 * @see spl_autoload_register
 	 */
-	public function register()
+	public function __construct()
 	{
 		spl_autoload_register(array($this, 'load'), true, true);
+	}
+
+	/**
+	 * setRoot
+	 *
+	 * @see \turnip\autoloader::$_root
+	 * @access public
+	 * @param string $root
+	 * @return \turnip\autoloader
+	 */
+	public function setRoot($root)
+	{
+		$this->_root = $root;
+		return $this;
+	}
+
+	/**
+	 * getRoot
+	 *
+	 * @see \turnip\autoloader::$_root
+	 * @access public
+	 * @return string|null
+	 */
+	public function getRoot()
+	{
+		return $this->_root;
 	}
 
 	/**
@@ -78,10 +103,6 @@ class autoloader
 	 * Unregister this autoloader instance from the
 	 * autoloader stack.
 	 *
-	 * @todo it's possible to bind this to __destruct,
-	 * 	 called when the object isn't referenced
-	 * 		 anymore - but is it worth having the method
-	 * 	 called every time the script shuts down?
 	 * @access public
 	 * @see spl_autoload_unregister
 	 */
@@ -93,11 +114,12 @@ class autoloader
 	/**
 	 * map
 	 * 
-	 * Maps a single, or a list of class names to absolute
-	 * or relative paths to their files.
+	 * Maps a single, or a list of class names
+	 * to absolute or relative paths to their
+	 * files.
 	 *
 	 * e.g:
-	 * array('view\\view.php' => 'new/path/to/view.php')
+	 * array('Registry' => 'legacy/registry.php')
 	 *
 	 * @access public
 	 * @param array $map
@@ -145,12 +167,12 @@ class autoloader
 		else
 		{
 			$className = ltrim($className, '\\');
-			$fileName  = '';
+			$fileName  = $this->_root ? $this->_root . DIRECTORY_SEPARATOR : '';
 			$namespace = '';
 			if ($lastNsPos = strripos($className, '\\')) {
 				$namespace = substr($className, 0, $lastNsPos);
 				$className = substr($className, $lastNsPos + 1);
-				$fileName  = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
+				$fileName .= str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
 		    }
 
 			$fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';

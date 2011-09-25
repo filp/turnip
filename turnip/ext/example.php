@@ -17,23 +17,32 @@
  *	along with turnip.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require 'turnip/application.php';
+namespace turnip\ext;
 
 /**
- * turnip bootstrap (example)
+ * \turnip\ext\example
  *
- * @author Filipe Dobreira <http://github.com/FilipeD>
+ * @author Filipe Dobreira <github.com/FilipeD>
  * @package turnip
  */
-call_user_func(function()
+class example extends \turnip\extension
 {
-	$app = new \turnip\application(array(
-		'ext' => array('example'),
-		'db'  => array(
-			'host' => 'localhost',
-			'name' => 'misc',
-			'user' => 'root',
-			'pass' => ''
-		)
-	));
-});
+	/**
+	 * index
+	 *
+	 * routes are a mix of named parameters and regex.
+	 * the :msg parameter is optional
+	 *
+	 * @route /:msg?
+	 *
+	 * @access public
+	 * @param \turnip\application $app
+	 * @return string
+	 */
+	public function index(\turnip\application $app)
+	{
+		echo $this->getView()
+			 	  ->with(array('foo' => $app->getClient()->getInput('msg', 'welcome to the home page :|')))
+			 	  ->renderFile('home.php');
+	}
+}

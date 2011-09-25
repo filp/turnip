@@ -17,23 +17,29 @@
  *	along with turnip.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require 'turnip/application.php';
+namespace turnip;
 
 /**
- * turnip bootstrap (example)
+ * extension
  *
- * @author Filipe Dobreira <http://github.com/FilipeD>
+ * @author Filipe Dobreira <github.com/FilipeD>
  * @package turnip
  */
-call_user_func(function()
+class extension
 {
-	$app = new \turnip\application(array(
-		'ext' => array('example'),
-		'db'  => array(
-			'host' => 'localhost',
-			'name' => 'misc',
-			'user' => 'root',
-			'pass' => ''
-		)
-	));
-});
+	/**
+	 * getView
+	 *
+	 * Returns a view object pre-set for
+	 * this extension.
+	 *
+	 * @access public
+	 * @return \turnip\view
+	 */
+	public function getView()
+	{
+		$view = new view;
+		$path = substr(get_class($this), strlen(__NAMESPACE__) + 1);
+		return $view->setFileRoot($path);
+	}
+}
